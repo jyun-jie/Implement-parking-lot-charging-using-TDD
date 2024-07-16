@@ -22,7 +22,7 @@ public class ParkingFeeCalculator {
     //假日
     //每小時 100元 (以半小時收費)
     //每日上限2400 (隔日另計)
-    public long calcualte(LocalDateTime start , LocalDateTime end){
+    public long calcualte(ParkingSession parkingSession){
 
         //誇天
         //一個durationn 切多段 ， 一天切一段
@@ -31,7 +31,7 @@ public class ParkingFeeCalculator {
         //一個durationn 切多段 ， 一天切一段
 
 
-        Duration duration = Duration.between(start,end);
+        Duration duration = Duration.between(parkingSession.start(), parkingSession.end());
 
         if (isShort(duration)) {
             return 0L;
@@ -42,7 +42,7 @@ public class ParkingFeeCalculator {
         //calculate fee with daily duraiton => charging behavior
 
 
-        List<Duration> dailyDurations = getDailyDurations(start, end);
+        List<Duration> dailyDurations = getDailyDurations(parkingSession.start(), parkingSession.end());
         long totalFee = 0L;
 
         for (Duration dailyDuration : dailyDurations) {

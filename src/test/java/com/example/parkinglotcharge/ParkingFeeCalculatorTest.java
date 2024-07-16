@@ -45,9 +45,7 @@ public class ParkingFeeCalculatorTest {
 
     private static void when_calculate() {
         actual = cal.calcualte(
-                start,
-                end
-        );
+                new ParkingSession(start, end));
     }
 
     @Test
