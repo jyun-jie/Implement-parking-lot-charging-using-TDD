@@ -34,34 +34,50 @@ public class ParkingFeeCalculator {
             return 0L;
         }
 
-        if (start.toLocalDate().equals(end.toLocalDate())) {
-            long fee = getRegularFee(duration);
+        LocalDateTime todayStart = start.toLocalDate().atStartOfDay();
+        long totalFee = 0L;
+        while(todayStart.isBefore(end)){
+            if(start.isAfter(todayStart) &&
+                    !end.isBefore(todayStart.plusDays(1L))){
+                LocalDateTime todaySessionStart = start;
+                LocalDateTime todaySessionEnd = todayStart.plusDays(1L);
 
-            return  Math.min(fee,150L);
-        }else{
-
-            LocalDateTime todayStart = start.toLocalDate().atStartOfDay();
-            long totalFee = 0L;
-            while(todayStart.isBefore(end)){
-                if(start.isAfter(todayStart) &&
-                        !end.isBefore(todayStart.plusDays(1L))){
-                    LocalDateTime todaySessionStart = start;
-                    LocalDateTime todaySessionEnd = todayStart.plusDays(1L);
-
-                    Duration todayDuration = Duration.between(todaySessionStart, todaySessionEnd);
+                Duration todayDuration = Duration.between(todaySessionStart, todaySessionEnd);
 
 
-                    long todayFee = getRegularFee(todayDuration);
+                long todayFee = getRegularFee(todayDuration);
 
-                    totalFee += Math.min(todayFee,150L);
-                }else{
-                    totalFee +=150L;
-                }
+                totalFee += Math.min(todayFee,150L);
+            }else if( !start.isAfter(todayStart) &&
+                       end.isBefore(todayStart.plusDays(1L)) ) {
+                LocalDateTime todaySessionStart = todayStart;
+                LocalDateTime todaySessionEnd = end;
 
-                todayStart = todayStart.plusDays(1L);
+                Duration todayDuration = Duration.between(todaySessionStart, todaySessionEnd);
+
+
+                long todayFee = getRegularFee(todayDuration);
+
+                totalFee += Math.min(todayFee,150L);
+            } else if (start.isAfter(todayStart) &&
+                    end.isBefore(todayStart.plusDays(1L))) {
+                LocalDateTime todaySessionStart = start;
+                LocalDateTime todaySessionEnd = end;
+
+                Duration todayDuration = Duration.between(todaySessionStart, todaySessionEnd);
+
+
+                long todayFee = getRegularFee(todayDuration);
+
+                totalFee += Math.min(todayFee,150L);
+            } else{
+                totalFee +=150L;
             }
-            return totalFee;
+
+            todayStart = todayStart.plusDays(1L);
         }
+        return totalFee;
+
 
     }
 
