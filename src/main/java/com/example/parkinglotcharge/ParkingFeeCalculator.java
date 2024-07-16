@@ -36,9 +36,26 @@ public class ParkingFeeCalculator {
         if (isShort(duration)) {
             return 0L;
         }
+        //lock of domain knowledge
+        // each iteration in the loop
+        //calculate daily duration          => parking behavior
+        //calculate fee with daily duraiton => charging behavior
 
+
+        List<Duration> dailyDurations = getDailyDurations(start, end);
         long totalFee = 0L;
 
+        for (Duration dailyDuration : dailyDurations) {
+
+            long todayFee = getRegularFee(dailyDuration);
+            totalFee += Math.min(todayFee,150L);
+        }
+        return totalFee;
+
+
+    }
+
+    private static List<Duration> getDailyDurations(LocalDateTime start, LocalDateTime end) {
         List<Duration> dailyDurations = new ArrayList<>();
         LocalDateTime todayStart = start.toLocalDate().atStartOfDay();
         while(todayStart.isBefore(end)){
@@ -61,14 +78,7 @@ public class ParkingFeeCalculator {
 
             todayStart = tomorrowStart;
         }
-        for (Duration dailyDuration : dailyDurations) {
-
-            long todayFee = getRegularFee(dailyDuration);
-            totalFee += Math.min(todayFee,150L);
-        }
-        return totalFee;
-
-
+        return dailyDurations;
     }
 
     private long getRegularFee(Duration duration) {
