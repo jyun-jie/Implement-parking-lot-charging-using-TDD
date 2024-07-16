@@ -10,6 +10,7 @@ public class ParkingFeeCalculator {
     private Duration THIRTY_MINUTES = Duration.ofMinutes(30L);
     private Duration FIFTEEN_MINUTES = Duration.ofMinutes(15L);
 
+
     //topic : 如何製作一個 汽車計算機
     //停車場
     //15分鐘免費
@@ -37,52 +38,24 @@ public class ParkingFeeCalculator {
         LocalDateTime todayStart = start.toLocalDate().atStartOfDay();
         long totalFee = 0L;
         while(todayStart.isBefore(end)){
-            if(start.isAfter(todayStart) &&
-                    !end.isBefore(todayStart.plusDays(1L))){
-                LocalDateTime todaySessionStart = start;
-                LocalDateTime todaySessionEnd = todayStart.plusDays(1L);
 
-                Duration todayDuration = Duration.between(todaySessionStart, todaySessionEnd);
+            LocalDateTime tomorrowStart = todayStart.plusDays(1L);
 
+            LocalDateTime todaySessionStart = start.isAfter(todayStart)
+                    ? start
+                    : todayStart;
+            LocalDateTime todaySessionEnd = end.isBefore(tomorrowStart)
+                    ? end
+                    : tomorrowStart;
 
-                long todayFee = getRegularFee(todayDuration);
-
-                totalFee += Math.min(todayFee,150L);
-            }else if( !start.isAfter(todayStart) &&
-                       end.isBefore(todayStart.plusDays(1L)) ) {
-                LocalDateTime todaySessionStart = todayStart;
-                LocalDateTime todaySessionEnd = end;
-
-                Duration todayDuration = Duration.between(todaySessionStart, todaySessionEnd);
+            Duration todayDuration = Duration.between(todaySessionStart, todaySessionEnd);
 
 
-                long todayFee = getRegularFee(todayDuration);
+            long todayFee = getRegularFee(todayDuration);
 
-                totalFee += Math.min(todayFee,150L);
-            } else if (start.isAfter(todayStart) &&
-                    end.isBefore(todayStart.plusDays(1L))) {
-                LocalDateTime todaySessionStart = start;
-                LocalDateTime todaySessionEnd = end;
+            totalFee += Math.min(todayFee,150L);
 
-                Duration todayDuration = Duration.between(todaySessionStart, todaySessionEnd);
-
-
-                long todayFee = getRegularFee(todayDuration);
-
-                totalFee += Math.min(todayFee,150L);
-            } else{
-                LocalDateTime todaySessionStart = todayStart;
-                LocalDateTime todaySessionEnd = todayStart.plusDays(1L);
-
-                Duration todayDuration = Duration.between(todaySessionStart, todaySessionEnd);
-
-
-                long todayFee = getRegularFee(todayDuration);
-
-                totalFee += Math.min(todayFee,150L);
-            }
-
-            todayStart = todayStart.plusDays(1L);
+            todayStart = tomorrowStart;
         }
         return totalFee;
 
