@@ -1,5 +1,8 @@
 package com.example.parkinglotcharge;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 
@@ -14,22 +17,23 @@ public class ParkingFeeCalculator {
     //每小時 100元 (以半小時收費)
     //每日上限2400 (隔日另計)
     public long calcualte(LocalDateTime start , LocalDateTime end){
-        long minBetween = ChronoUnit.MINUTES.between(start,end);
 
-        if(minBetween < 15){
+        Duration duration = Duration.between(start,end);
+
+        if (duration.compareTo(Duration.ofMinutes(15L))<=0) {
             return 0L;
         }
 
-        long regularFee =   getRegularFee(minBetween);
+        Duration thirtyMinutes = Duration.ofMinutes(30L);
 
-        return Math.min(regularFee,150L);
+        long periods = BigDecimal.valueOf(duration.toNanos())
+                .divide(BigDecimal.valueOf(thirtyMinutes.toNanos()), RoundingMode.UP)
+                .longValue();
+        long fee = periods * 30;
 
+        return  Math.min(fee,150L);
     }
 
-    private static long getRegularFee(long minBetween) {
-        long periods = minBetween /30;
-        return  (periods+1) * 30;
-    }
 
 
 

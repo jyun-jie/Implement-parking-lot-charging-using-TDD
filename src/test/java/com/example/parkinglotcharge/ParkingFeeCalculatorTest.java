@@ -23,7 +23,7 @@ public class ParkingFeeCalculatorTest {
     @Test
     void over_150_minute_then_pay_150(){
         given_parking_starts_at("2024-01-02" + "T00:00:00");
-        given_parking_ends_at("2024-01-02" + "T02:30:00");
+        given_parking_ends_at("2024-01-02" + "T02:30:01");
 
         when_calculate();
 
@@ -53,7 +53,7 @@ public class ParkingFeeCalculatorTest {
     @Test
     void _15_minute_Free(){
         given_parking_starts_at("2024-01-02" + "T00:00:00");
-        given_parking_ends_at("2024-01-02" + "T00:14:59");
+        given_parking_ends_at("2024-01-02" + "T00:15:00");
 
         when_calculate();
 
@@ -64,7 +64,7 @@ public class ParkingFeeCalculatorTest {
     @Test
     void over_15_minute_Not_Free(){
         given_parking_starts_at("2024-01-02" + "T00:00:00");
-        given_parking_ends_at("2024-01-02" + "T00:15:00");
+        given_parking_ends_at("2024-01-02" + "T00:15:01");
 
         when_calculate();
 
@@ -75,7 +75,7 @@ public class ParkingFeeCalculatorTest {
     @Test
     void over_30_minute_then_pay_60(){
         given_parking_starts_at("2024-01-02" + "T00:00:00");
-        given_parking_ends_at("2024-01-02" + "T00:30:00");
+        given_parking_ends_at("2024-01-02" + "T00:30:01");
 
         when_calculate();
 
@@ -86,7 +86,7 @@ public class ParkingFeeCalculatorTest {
     @Test
     void over_60_minute_then_pay_90(){
         given_parking_starts_at("2024-01-02" + "T00:00:00");
-        given_parking_ends_at("2024-01-02" + "T01:00:00");
+        given_parking_ends_at("2024-01-02" + "T01:00:01");
 
         when_calculate();
 
