@@ -95,5 +95,16 @@ public class ParkingFeeCalculatorTest {
     }
 
 
+    @Test
+    void two_whole_days(){
+        given_parking_starts_at("2024-01-02" + "T00:00:00");
+        given_parking_ends_at("2024-01-04" + "T00:00:00");
+
+        when_calculate();
+
+
+        then_should_pay(300L);
+    }
+
 
 }

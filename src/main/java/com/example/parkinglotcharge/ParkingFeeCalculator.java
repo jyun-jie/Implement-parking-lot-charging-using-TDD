@@ -10,7 +10,7 @@ public class ParkingFeeCalculator {
     private Duration THIRTY_MINUTES = Duration.ofMinutes(30L);
     private Duration FIFTEEN_MINUTES = Duration.ofMinutes(15L);
 
-    //topic : 如何製作一個 能上新聞的 汽車計算機
+    //topic : 如何製作一個 汽車計算機
     //停車場
     //15分鐘免費
     //平日
@@ -21,15 +21,35 @@ public class ParkingFeeCalculator {
     //每日上限2400 (隔日另計)
     public long calcualte(LocalDateTime start , LocalDateTime end){
 
+        //誇天
+        //一個durationn 切多段 ， 一天切一段
+        //國定假日
+        //今天是哪天
+        //一個durationn 切多段 ， 一天切一段
+
+
         Duration duration = Duration.between(start,end);
 
         if (isShort(duration)) {
             return 0L;
         }
 
-        long fee = getRegularFee(duration);
+        if (start.toLocalDate().equals(end.toLocalDate())) {
+            long fee = getRegularFee(duration);
 
-        return  Math.min(fee,150L);
+            return  Math.min(fee,150L);
+        }else{
+
+            LocalDateTime todayStart = start.toLocalDate().atStartOfDay();
+            long totalFee = 0L;
+            while(todayStart.isBefore(end)){
+                totalFee +=150L;
+
+                todayStart = todayStart.plusDays(1L);
+            }
+            return totalFee;
+        }
+
     }
 
     private long getRegularFee(Duration duration) {
