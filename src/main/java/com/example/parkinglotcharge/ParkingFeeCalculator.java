@@ -42,7 +42,7 @@ public class ParkingFeeCalculator {
         //calculate fee with daily duraiton => charging behavior
 
 
-        List<Duration> dailyDurations = getDailyDurations(parkingSession.getStart(), parkingSession.getEnd());
+        List<Duration> dailyDurations = getDailyDurations(parkingSession.getStart(), parkingSession.getEnd(), parkingSession);
         long totalFee = 0L;
 
         for (Duration dailyDuration : dailyDurations) {
@@ -55,18 +55,18 @@ public class ParkingFeeCalculator {
 
     }
 
-    private static List<Duration> getDailyDurations(LocalDateTime start, LocalDateTime end) {
+    private static List<Duration> getDailyDurations( ParkingSession parkingSession) {
         List<Duration> dailyDurations = new ArrayList<>();
-        LocalDateTime todayStart = start.toLocalDate().atStartOfDay();
-        while(todayStart.isBefore(end)){
+        LocalDateTime todayStart = parkingSession.getStart().toLocalDate().atStartOfDay();
+        while(todayStart.isBefore(parkingSession.getEnd())){
 
             LocalDateTime tomorrowStart = todayStart.plusDays(1L);
 
-            LocalDateTime todaySessionStart = start.isAfter(todayStart)
-                    ? start
+            LocalDateTime todaySessionStart = parkingSession.getStart().isAfter(todayStart)
+                    ? parkingSession.getStart()
                     : todayStart;
-            LocalDateTime todaySessionEnd = end.isBefore(tomorrowStart)
-                    ? end
+            LocalDateTime todaySessionEnd = parkingSession.getEnd().isBefore(tomorrowStart)
+                    ? parkingSession.getEnd()
                     : tomorrowStart;
 
             Duration todayDuration = Duration.between(todaySessionStart, todaySessionEnd);
