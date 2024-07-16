@@ -22,17 +22,13 @@ public class ParkingFeeCalculatorTest {
 
     @Test
     void over_150_minute_then_pay_150(){
-        runTest("2024-01-01T00:00:00","2024-01-01T02:30:00",150L);
-    }
-
-    private static void runTest(String startText, String endText , long expected) {
-        given_parking_starts_at(startText);
-        given_parking_ends_at(endText);
+        given_parking_starts_at("2024-01-02" + "T00:00:00");
+        given_parking_ends_at("2024-01-02" + "T02:30:00");
 
         when_calculate();
 
 
-        then_should_pay(expected);
+        then_should_pay(150L);
     }
 
     private static void then_should_pay(long expected) {
@@ -56,22 +52,46 @@ public class ParkingFeeCalculatorTest {
 
     @Test
     void _15_minute_Free(){
-        runTest("2024-01-01T00:00:00","2024-01-01T00:14:59",0L);
+        given_parking_starts_at("2024-01-02" + "T00:00:00");
+        given_parking_ends_at("2024-01-02" + "T00:14:59");
+
+        when_calculate();
+
+
+        then_should_pay(0L);
     }
 
     @Test
     void over_15_minute_Not_Free(){
-        runTest("2024-01-01T00:00:00","2024-01-01T00:15:00",30L);
+        given_parking_starts_at("2024-01-02" + "T00:00:00");
+        given_parking_ends_at("2024-01-02" + "T00:15:00");
+
+        when_calculate();
+
+
+        then_should_pay(30L);
     }
 
     @Test
     void over_30_minute_then_pay_60(){
-        runTest("2024-01-01T00:00:00","2024-01-01T00:30:00",60L);
+        given_parking_starts_at("2024-01-02" + "T00:00:00");
+        given_parking_ends_at("2024-01-02" + "T00:30:00");
+
+        when_calculate();
+
+
+        then_should_pay(60L);
     }
 
     @Test
     void over_60_minute_then_pay_90(){
-        runTest("2024-01-01T00:00:00","2024-01-01T01:00:00",90L);
+        given_parking_starts_at("2024-01-02" + "T00:00:00");
+        given_parking_ends_at("2024-01-02" + "T01:00:00");
+
+        when_calculate();
+
+
+        then_should_pay(90L);
     }
 
 
