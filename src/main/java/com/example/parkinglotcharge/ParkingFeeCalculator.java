@@ -29,7 +29,7 @@ public class ParkingFeeCalculator {
         //一個durationn 切多段 ， 一天切一段
 
 
-        Duration duration = Duration.between(parkingSession.getStart(), parkingSession.getEnd());
+        Duration duration = parkingSession.getTotalDuration();
 
         if (isShort(duration)) {
             return 0L;

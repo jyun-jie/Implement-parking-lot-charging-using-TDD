@@ -41,4 +41,8 @@ public final class ParkingSession {
         }
         return dailyDurations;
     }
+
+    Duration getTotalDuration() {
+        return Duration.between(getStart(), getEnd());
+    }
 }
