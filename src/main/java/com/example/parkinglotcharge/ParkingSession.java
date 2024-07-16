@@ -1,6 +1,16 @@
 package com.example.parkinglotcharge;
 
-import java.time.LocalDateTime;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 
-public record ParkingSession(LocalDateTime start, LocalDateTime end) {
+import java.time.LocalDateTime;
+import java.util.Objects;
+
+@Data
+@AllArgsConstructor
+public final class ParkingSession {
+    private final LocalDateTime start;
+    private final LocalDateTime end;
+
+
 }

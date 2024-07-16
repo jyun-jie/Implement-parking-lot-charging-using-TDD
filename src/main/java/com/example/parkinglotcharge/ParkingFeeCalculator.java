@@ -31,7 +31,7 @@ public class ParkingFeeCalculator {
         //一個durationn 切多段 ， 一天切一段
 
 
-        Duration duration = Duration.between(parkingSession.start(), parkingSession.end());
+        Duration duration = Duration.between(parkingSession.getStart(), parkingSession.getEnd());
 
         if (isShort(duration)) {
             return 0L;
@@ -42,7 +42,7 @@ public class ParkingFeeCalculator {
         //calculate fee with daily duraiton => charging behavior
 
 
-        List<Duration> dailyDurations = getDailyDurations(parkingSession.start(), parkingSession.end());
+        List<Duration> dailyDurations = getDailyDurations(parkingSession.getStart(), parkingSession.getEnd());
         long totalFee = 0L;
 
         for (Duration dailyDuration : dailyDurations) {
