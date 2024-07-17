@@ -9,11 +9,13 @@ public class ParkingFeeCalculator {
     private Duration FIFTEEN_MINUTES = Duration.ofMinutes(15L);
     private final PriceBook priceBook;
 
+
+
     public ParkingFeeCalculator() {
-        priceBook = new PriceBook();
+        //priceBook = new PriceBook();
+        PriceBookRepository priceBookRepository = new PriceBookRepository(new PriceBook());
+        priceBook = priceBookRepository.getPriceBook();
     }
-
-
     //topic : 如何製作一個 汽車計算機
     //停車場
     //15分鐘免費
@@ -23,6 +25,11 @@ public class ParkingFeeCalculator {
     //假日
     //每小時 100元 (以半小時收費)
     //每日上限2400 (隔日另計)
+
+    //物件生成與計算邏輯的耦合
+    // ex : new PriceBook()
+    // solution : Repository Pattern ;
+
     public long calcualte(ParkingSession parkingSession){
 
         Duration duration = parkingSession.getTotalDuration();
@@ -34,7 +41,7 @@ public class ParkingFeeCalculator {
         List<DailySession> dailySessions = parkingSession.getDailySessions();
 
         return dailySessions.stream().mapToLong(priceBook::getDailyFee).sum();
-        
+
     }
 
     private boolean isShort(Duration duration) {
