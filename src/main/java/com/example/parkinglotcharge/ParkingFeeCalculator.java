@@ -2,7 +2,9 @@ package com.example.parkinglotcharge;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.time.DayOfWeek;
 import java.time.Duration;
+import java.time.LocalDate;
 import java.util.List;
 
 public class ParkingFeeCalculator {
@@ -39,13 +41,16 @@ public class ParkingFeeCalculator {
         //calculate daily duration          => parking behavior
         //calculate fee with daily duraiton => charging behavior
 
+        //透過加上假日的領域邏輯，把算帳的領域物件逼出來
 
-        List<Duration> dailyDurations = parkingSession.getDailyDurations();
+
+        List<DailySession> dailySessions = parkingSession.getDailySessions();
+
         long totalFee = 0L;
 
-        for (Duration dailyDuration : dailyDurations) {
+        for (DailySession dailySession : dailySessions) {
 
-            long todayFee = getRegularFee(dailyDuration);
+            long todayFee = getRegularFee(dailySession.getTodayDuration(),dailySession.getToday());
             totalFee += Math.min(todayFee,150L);
         }
         return totalFee;
@@ -53,11 +58,15 @@ public class ParkingFeeCalculator {
 
     }
 
-    private long getRegularFee(Duration duration) {
+    private long getRegularFee(Duration duration, LocalDate today) {
         long periods = BigDecimal.valueOf(duration.toNanos())
                 .divide(BigDecimal.valueOf(THIRTY_MINUTES.toNanos()), RoundingMode.UP)
                 .longValue();
-        long fee = periods * 30;
+        int unitPrice = DayOfWeek.SATURDAY.equals(today.getDayOfWeek())
+                ?50
+                :30;
+
+        long fee = periods * unitPrice;
         return fee;
     }
 

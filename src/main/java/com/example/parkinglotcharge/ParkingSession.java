@@ -4,10 +4,10 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import java.time.Duration;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 @Data
 @AllArgsConstructor
@@ -16,9 +16,12 @@ public final class ParkingSession {
     private final LocalDateTime end;
 
 
-    List<Duration> getDailyDurations() {
+    List<DailySession> getDailySessions() {
         List<Duration> dailyDurations = new ArrayList<>();
-        LocalDateTime todayStart = getStart().toLocalDate().atStartOfDay();
+        List<DailySession> dailySessions = new ArrayList<>();
+
+        LocalDate today = getStart().toLocalDate();
+        LocalDateTime todayStart = today.atStartOfDay();
         while(todayStart.isBefore(getEnd())){
 
             LocalDateTime tomorrowStart = todayStart.plusDays(1L);
@@ -33,13 +36,17 @@ public final class ParkingSession {
             Duration todayDuration = Duration.between(todaySessionStart, todaySessionEnd);
             dailyDurations.add(todayDuration);
 
+            dailySessions.add(
+                    new DailySession(today,todayDuration)
+            );
+
 //            long todayFee = getRegularFee(todayDuration);
 //            totalFee += Math.min(todayFee,150L);
 
 
             todayStart = tomorrowStart;
         }
-        return dailyDurations;
+        return dailySessions;
     }
 
     Duration getTotalDuration() {

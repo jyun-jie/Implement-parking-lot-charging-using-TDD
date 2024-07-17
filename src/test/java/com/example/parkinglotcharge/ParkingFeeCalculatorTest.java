@@ -126,5 +126,17 @@ public class ParkingFeeCalculatorTest {
         then_should_pay(150L+30L);
     }
 
+    @Test
+    void saturday_pay_50_per_half_hour(){
+        given_parking_starts_at("2024-01-06" + "T00:00:00");
+        given_parking_ends_at("2024-01-06" + "T00:15:01");
+
+        when_calculate();
+
+
+        then_should_pay(50L);
+    }
+
+
 
 }
