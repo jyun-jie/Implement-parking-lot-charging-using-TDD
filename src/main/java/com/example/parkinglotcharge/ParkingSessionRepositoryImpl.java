@@ -1,6 +1,6 @@
 package com.example.parkinglotcharge;
 
-public class ParkingBookRepositoryImpl implements ParkingBookRepository {
+public class ParkingSessionRepositoryImpl implements ParkingSessionRepository {
     private ParkingSession parkingSession;
 
     @Override

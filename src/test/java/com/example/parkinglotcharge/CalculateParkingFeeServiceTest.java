@@ -19,7 +19,7 @@ public class CalculateParkingFeeServiceTest {
     void setUp() {
         cal = new CalculateParkingFeeService(
                 new PriceBookRepositoryImpl(new PriceBook()),
-                new ParkingBookRepositoryImpl());
+                new ParkingSessionRepositoryImpl());
     }
 
     @Test
