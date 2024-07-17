@@ -31,10 +31,10 @@ public class CalculateParkingFeeService {
     // solution : Repository Pattern ;
     //將行為委託給entity 、以取代{資料操作}
 
-    public long calcualte(){
+    public long calcualte(String plate){
 
         //parkingSessionRepository.save(parkingSession1);
-        ParkingSession parkingSession = parkingSessionRepository.find("ABC-1234");
+        ParkingSession parkingSession = parkingSessionRepository.find(plate);
 
 
         PriceBook priceBook = priceBookRepository.getPriceBook();

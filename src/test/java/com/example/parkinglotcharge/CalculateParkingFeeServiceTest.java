@@ -26,7 +26,7 @@ public class CalculateParkingFeeServiceTest {
         given_parking_starts_at("2024-01-02" + "T00:00:00");
         given_car_drives_out_at("ABC-1234", "2024-01-02" + "T02:30:01");
 
-        when_calculate();
+        when_calculate("ABC-1234");
 
 
         then_should_pay(150L);
@@ -47,9 +47,9 @@ public class CalculateParkingFeeServiceTest {
         parkingSessionRepository.save(new ParkingSession(LocalDateTime.parse(startText),null));
     }
 
-    private static void when_calculate() {
-        actual = cal.calcualte(
-                );
+    private static void when_calculate(String plate) {
+        actual = cal.calcualte(plate
+        );
     }
 
     @Test
@@ -57,7 +57,7 @@ public class CalculateParkingFeeServiceTest {
         given_parking_starts_at("2024-01-02" + "T00:00:00");
         given_car_drives_out_at("ABC-1234", "2024-01-02" + "T00:15:00");
 
-        when_calculate();
+        when_calculate("ABC-1234");
 
 
         then_should_pay(0L);
@@ -68,7 +68,7 @@ public class CalculateParkingFeeServiceTest {
         given_parking_starts_at("2024-01-02" + "T00:00:00");
         given_car_drives_out_at("ABC-1234", "2024-01-02" + "T00:15:01");
 
-        when_calculate();
+        when_calculate("ABC-1234");
 
 
         then_should_pay(30L);
@@ -79,7 +79,7 @@ public class CalculateParkingFeeServiceTest {
         given_parking_starts_at("2024-01-02" + "T00:01:00");
         given_car_drives_out_at("ABC-1234", "2024-01-02" + "T00:31:01");
 
-        when_calculate();
+        when_calculate("ABC-1234");
 
 
         then_should_pay(60L);
@@ -90,7 +90,7 @@ public class CalculateParkingFeeServiceTest {
         given_parking_starts_at("2024-01-02" + "T00:00:00");
         given_car_drives_out_at("ABC-1234", "2024-01-02" + "T01:00:01");
 
-        when_calculate();
+        when_calculate("ABC-1234");
 
 
         then_should_pay(90L);
@@ -102,7 +102,7 @@ public class CalculateParkingFeeServiceTest {
         given_parking_starts_at("2024-01-02" + "T00:00:00");
         given_car_drives_out_at("ABC-1234", "2024-01-04" + "T00:00:00");
 
-        when_calculate();
+        when_calculate("ABC-1234");
 
 
         then_should_pay(300L);
@@ -113,7 +113,7 @@ public class CalculateParkingFeeServiceTest {
         given_parking_starts_at("2024-01-02" + "T23:50:00");
         given_car_drives_out_at("ABC-1234", "2024-01-04" + "T00:00:00");
 
-        when_calculate();
+        when_calculate("ABC-1234");
 
 
         then_should_pay(30L+150L);
@@ -124,7 +124,7 @@ public class CalculateParkingFeeServiceTest {
         given_parking_starts_at("2024-01-02" + "T00:00:00");
         given_car_drives_out_at("ABC-1234", "2024-01-03" + "T00:10:00");
 
-        when_calculate();
+        when_calculate("ABC-1234");
 
 
         then_should_pay(150L+30L);
@@ -135,7 +135,7 @@ public class CalculateParkingFeeServiceTest {
         given_parking_starts_at("2024-01-06" + "T00:00:00");
         given_car_drives_out_at("ABC-1234", "2024-01-06" + "T00:15:01");
 
-        when_calculate();
+        when_calculate("ABC-1234");
 
 
         then_should_pay(50L);
@@ -146,7 +146,7 @@ public class CalculateParkingFeeServiceTest {
         given_parking_starts_at("2024-01-07" + "T00:00:00");
         given_car_drives_out_at("ABC-1234", "2024-01-07" + "T00:15:01");
 
-        when_calculate();
+        when_calculate("ABC-1234");
 
 
         then_should_pay(50L);
@@ -156,7 +156,7 @@ public class CalculateParkingFeeServiceTest {
         given_parking_starts_at("2024-01-06" + "T00:00:00");
         given_car_drives_out_at("ABC-1234", "2024-01-07" + "T00:00:00");
 
-        when_calculate();
+        when_calculate("ABC-1234");
 
 
         then_should_pay(2400L);
@@ -167,7 +167,7 @@ public class CalculateParkingFeeServiceTest {
         given_parking_starts_at("2024-01-01" + "T00:00:00");
         given_car_drives_out_at("ABC-1234", "2024-01-01" + "T00:15:01");
 
-        when_calculate();
+        when_calculate("ABC-1234");
 
 
         then_should_pay(50L);
