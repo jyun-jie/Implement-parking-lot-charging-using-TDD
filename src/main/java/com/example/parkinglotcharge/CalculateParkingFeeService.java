@@ -7,11 +7,11 @@ public class CalculateParkingFeeService {
 
 
     private Duration FIFTEEN_MINUTES = Duration.ofMinutes(15L);
-    private PriceBookRepository priceBookRepository;
+    private PriceBookRepositoryImpl priceBookRepository;
 
 
 
-    public CalculateParkingFeeService(PriceBookRepository priceBookRepository) {
+    public CalculateParkingFeeService(PriceBookRepositoryImpl priceBookRepository) {
         //priceBook = new PriceBook();
         this.priceBookRepository = priceBookRepository;
 
