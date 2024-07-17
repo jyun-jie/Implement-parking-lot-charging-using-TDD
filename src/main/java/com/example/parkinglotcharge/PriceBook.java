@@ -9,11 +9,11 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class HolidayBook {
+public class PriceBook {
     private Duration THIRTY_MINUTES = Duration.ofMinutes(30L);
     private static Set<LocalDate> nationalHoliday = new HashSet<>();
 
-    public HolidayBook() {
+    public PriceBook() {
         nationalHoliday.add(LocalDate.of(2024,1,1));
     }
 
