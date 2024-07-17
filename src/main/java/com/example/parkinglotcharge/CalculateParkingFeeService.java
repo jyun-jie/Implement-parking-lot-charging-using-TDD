@@ -34,7 +34,7 @@ public class CalculateParkingFeeService {
     public long calcualte(){
 
         //parkingSessionRepository.save(parkingSession1);
-        ParkingSession parkingSession = parkingSessionRepository.find();
+        ParkingSession parkingSession = parkingSessionRepository.find("ABC-1234");
 
 
         PriceBook priceBook = priceBookRepository.getPriceBook();
