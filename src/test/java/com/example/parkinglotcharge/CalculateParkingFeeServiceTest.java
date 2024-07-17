@@ -174,5 +174,16 @@ public class CalculateParkingFeeServiceTest {
         then_should_pay(50L);
     }
 
+    @Test
+    void another_car(){
+        given_parking_starts_at("ABC-1234", "2024-01-02" + "T00:00:00");
+        given_car_drives_out_at("ABC-1234", "2024-01-02" + "T00:31:01");
+
+        when_calculate("Not_my_car");
+
+
+        then_should_pay(0L);
+    }
+
 
 }

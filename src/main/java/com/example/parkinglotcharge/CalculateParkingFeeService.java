@@ -31,13 +31,28 @@ public class CalculateParkingFeeService {
     // solution : Repository Pattern ;
     //將行為委託給entity 、以取代{資料操作}
 
+    //Repository 的職責、物件生命週期
+    // ex :calculate(ParkingSession parkingSession)
+    // Solution : Repository + Factory
+    //  TIPS:
+    // 先HARD-CODE 幫你刻出形狀讓IDE幫你填上
+    // 用新測項來幫你描述邏輯 (RED)
+    // 改寫成真實邏輯 (GREEN)
+    // 如有需要，重構(REFACTOR)
+    //將行為委託給entity 、以取代{資料操作}
+
+
     public long calcualte(String plate){
 
-        //parkingSessionRepository.save(parkingSession1);
         ParkingSession parkingSession = parkingSessionRepository.find(plate);
+        if(parkingSession==null){
+            return 0L;
+        }
+
 
 
         PriceBook priceBook = priceBookRepository.getPriceBook();
+
         Duration duration = parkingSession.getTotalDuration();
 
         if (isShort(duration)) {
