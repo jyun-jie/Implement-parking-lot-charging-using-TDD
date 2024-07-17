@@ -62,7 +62,9 @@ public class ParkingFeeCalculator {
         long periods = BigDecimal.valueOf(duration.toNanos())
                 .divide(BigDecimal.valueOf(THIRTY_MINUTES.toNanos()), RoundingMode.UP)
                 .longValue();
-        int unitPrice = DayOfWeek.SATURDAY.equals(today.getDayOfWeek())
+
+
+        int unitPrice = List.of(DayOfWeek.SATURDAY,DayOfWeek.SUNDAY).contains(today.getDayOfWeek())
                 ?50
                 :30;
 
