@@ -8,13 +8,13 @@ public class CalculateParkingFeeService {
 
     private Duration FIFTEEN_MINUTES = Duration.ofMinutes(15L);
     private PriceBookRepositoryImpl priceBookRepository;
+    private ParkingBookRepository parkingBookRepository ;
 
 
-
-    public CalculateParkingFeeService(PriceBookRepositoryImpl priceBookRepository) {
+    public CalculateParkingFeeService(PriceBookRepositoryImpl priceBookRepository,ParkingBookRepository parkingBookRepository) {
         //priceBook = new PriceBook();
         this.priceBookRepository = priceBookRepository;
-
+        this.parkingBookRepository = parkingBookRepository;
     }
     //topic : 如何製作一個 汽車計算機
     //停車場
@@ -29,11 +29,15 @@ public class CalculateParkingFeeService {
     //物件生成與計算邏輯的耦合
     // ex : new PriceBook()
     // solution : Repository Pattern ;
+    //將行為委託給entity 、以取代{資料操作}
 
-    public long calcualte(ParkingSession parkingSession){
+    public long calcualte(ParkingSession parkingSession1){
+
+        parkingBookRepository.save(parkingSession1);
+        ParkingSession parkingSession = parkingBookRepository.find();
+
 
         PriceBook priceBook = priceBookRepository.getPriceBook();
-
         Duration duration = parkingSession.getTotalDuration();
 
         if (isShort(duration)) {

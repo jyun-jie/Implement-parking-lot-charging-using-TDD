@@ -17,7 +17,9 @@ public class CalculateParkingFeeServiceTest {
 
     @BeforeEach
     void setUp() {
-        cal = new CalculateParkingFeeService(new PriceBookRepositoryImpl(new PriceBook()));
+        cal = new CalculateParkingFeeService(
+                new PriceBookRepositoryImpl(new PriceBook()),
+                new ParkingBookRepositoryImpl());
     }
 
     @Test
