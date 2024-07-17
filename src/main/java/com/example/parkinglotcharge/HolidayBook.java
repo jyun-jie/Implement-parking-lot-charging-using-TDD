@@ -23,8 +23,8 @@ public class HolidayBook {
                 List.of(DayOfWeek.SATURDAY, DayOfWeek.SUNDAY).contains(today.getDayOfWeek());
     }
 
-    long getDailyFee(DailySession dailySession, ParkingFeeCalculator parkingFeeCalculator) {
-        long todayFee = getRegularFee(dailySession,parkingFeeCalculator);
+    long getDailyFee(DailySession dailySession) {
+        long todayFee = getRegularFee(dailySession);
 
         long dailyLimit = isHoliday(dailySession.getToday())
                 ?2400
@@ -33,7 +33,7 @@ public class HolidayBook {
         return Math.min(todayFee,dailyLimit);
     }
 
-    private long getRegularFee(DailySession dailySession, ParkingFeeCalculator parkingFeeCalculator) {
+    private long getRegularFee(DailySession dailySession) {
         long periods = BigDecimal.valueOf(dailySession.getTodayDuration().toNanos())
                 .divide(BigDecimal.valueOf(THIRTY_MINUTES.toNanos()), RoundingMode.UP)
                 .longValue();

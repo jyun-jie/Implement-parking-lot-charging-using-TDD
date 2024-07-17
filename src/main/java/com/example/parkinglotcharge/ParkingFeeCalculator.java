@@ -51,7 +51,7 @@ public class ParkingFeeCalculator {
 
         for (DailySession dailySession : dailySessions) {
 
-            long dailyFee = holidayBook.getDailyFee(dailySession, this);
+            long dailyFee = holidayBook.getDailyFee(dailySession);
 
             totalFee += dailyFee;
         }
