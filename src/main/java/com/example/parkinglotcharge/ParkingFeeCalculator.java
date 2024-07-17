@@ -50,7 +50,7 @@ public class ParkingFeeCalculator {
 
         for (DailySession dailySession : dailySessions) {
 
-            long todayFee = getRegularFee(dailySession.getTodayDuration(),dailySession.getToday());
+            long todayFee = getRegularFee(dailySession,dailySession.getTodayDuration(),dailySession.getToday());
             long dailyLimit = isHoliday(dailySession.getToday())
                     ?2400
                     :150;
@@ -66,13 +66,13 @@ public class ParkingFeeCalculator {
         return List.of(DayOfWeek.SATURDAY, DayOfWeek.SUNDAY).contains(today.getDayOfWeek());
     }
 
-    private long getRegularFee(Duration duration, LocalDate today) {
-        long periods = BigDecimal.valueOf(duration.toNanos())
+    private long getRegularFee(DailySession dailySession) {
+        long periods = BigDecimal.valueOf(dailySession.getTodayDuration().toNanos())
                 .divide(BigDecimal.valueOf(THIRTY_MINUTES.toNanos()), RoundingMode.UP)
                 .longValue();
 
 
-        return periods * (isHoliday(today)
+        return periods * (isHoliday(dailySession.getToday())
                         ?50
                         :30);
 
