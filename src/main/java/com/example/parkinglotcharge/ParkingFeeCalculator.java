@@ -8,12 +8,13 @@ public class ParkingFeeCalculator {
 
     private Duration FIFTEEN_MINUTES = Duration.ofMinutes(15L);
     private final PriceBook priceBook;
+    private PriceBookRepository priceBookRepository;
 
 
 
-    public ParkingFeeCalculator() {
+    public ParkingFeeCalculator(PriceBookRepository priceBookRepository) {
         //priceBook = new PriceBook();
-        PriceBookRepository priceBookRepository = new PriceBookRepository(new PriceBook());
+        this.priceBookRepository = priceBookRepository;
         priceBook = priceBookRepository.getPriceBook();
     }
     //topic : 如何製作一個 汽車計算機
