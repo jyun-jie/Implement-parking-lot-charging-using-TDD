@@ -1,15 +1,17 @@
 package com.example.parkinglotcharge;
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.time.Duration;
 import java.util.List;
 
 public class ParkingFeeCalculator {
 
-    private Duration THIRTY_MINUTES = Duration.ofMinutes(30L);
+
     private Duration FIFTEEN_MINUTES = Duration.ofMinutes(15L);
-    private final HolidayBook holidayBook = new HolidayBook();
+    private final HolidayBook holidayBook;
+
+    public ParkingFeeCalculator() {
+        holidayBook = new HolidayBook();
+    }
 
 
     //topic : 如何製作一個 汽車計算機
@@ -49,27 +51,12 @@ public class ParkingFeeCalculator {
 
         for (DailySession dailySession : dailySessions) {
 
-            long todayFee = getRegularFee(dailySession);
-            long dailyLimit = holidayBook.isHoliday(dailySession.getToday())
-                    ?2400
-                    :150;
+            long dailyFee = holidayBook.getDailyFee(dailySession, this);
 
-            totalFee += Math.min(todayFee,dailyLimit);
+            totalFee += dailyFee;
         }
         return totalFee;
 
-
-    }
-
-    private long getRegularFee(DailySession dailySession) {
-        long periods = BigDecimal.valueOf(dailySession.getTodayDuration().toNanos())
-                .divide(BigDecimal.valueOf(THIRTY_MINUTES.toNanos()), RoundingMode.UP)
-                .longValue();
-
-
-        return periods * (holidayBook.isHoliday(dailySession.getToday())
-                        ?50
-                        :30);
 
     }
 
