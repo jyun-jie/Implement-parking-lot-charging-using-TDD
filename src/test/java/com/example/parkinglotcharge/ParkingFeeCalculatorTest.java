@@ -147,6 +147,16 @@ public class ParkingFeeCalculatorTest {
 
         then_should_pay(50L);
     }
+    @Test
+    void saturday_daily_limit_is_2400(){
+        given_parking_starts_at("2024-01-06" + "T00:00:00");
+        given_parking_ends_at("2024-01-07" + "T00:00:00");
+
+        when_calculate();
+
+
+        then_should_pay(2400L);
+    }
 
 
 

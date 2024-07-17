@@ -51,7 +51,11 @@ public class ParkingFeeCalculator {
         for (DailySession dailySession : dailySessions) {
 
             long todayFee = getRegularFee(dailySession.getTodayDuration(),dailySession.getToday());
-            totalFee += Math.min(todayFee,150L);
+            long dailyLimit =List.of(DayOfWeek.SATURDAY,DayOfWeek.SUNDAY).contains(dailySession.getToday().getDayOfWeek())
+                    ?2400
+                    :150;
+
+            totalFee += Math.min(todayFee,dailyLimit);
         }
         return totalFee;
 
