@@ -7,17 +7,17 @@ import org.junit.jupiter.api.Test;
 import java.time.LocalDateTime;
 
 
-public class ParkingFeeCalculatorTest {
+public class CalculateParkingFeeServiceTest {
 
     private static LocalDateTime start;
     private static LocalDateTime end;
     private static long actual;
-    private static ParkingFeeCalculator cal;
+    private static CalculateParkingFeeService cal;
 
 
     @BeforeEach
     void setUp() {
-        cal = new ParkingFeeCalculator(new PriceBookRepository(new PriceBook()));
+        cal = new CalculateParkingFeeService(new PriceBookRepository(new PriceBook()));
     }
 
     @Test

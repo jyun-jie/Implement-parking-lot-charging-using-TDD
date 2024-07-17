@@ -3,7 +3,7 @@ package com.example.parkinglotcharge;
 import java.time.Duration;
 import java.util.List;
 
-public class ParkingFeeCalculator {
+public class CalculateParkingFeeService {
 
 
     private Duration FIFTEEN_MINUTES = Duration.ofMinutes(15L);
@@ -11,7 +11,7 @@ public class ParkingFeeCalculator {
 
 
 
-    public ParkingFeeCalculator(PriceBookRepository priceBookRepository) {
+    public CalculateParkingFeeService(PriceBookRepository priceBookRepository) {
         //priceBook = new PriceBook();
         this.priceBookRepository = priceBookRepository;
 
