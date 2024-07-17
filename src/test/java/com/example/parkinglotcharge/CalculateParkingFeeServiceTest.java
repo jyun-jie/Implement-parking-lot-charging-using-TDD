@@ -41,11 +41,15 @@ public class CalculateParkingFeeServiceTest {
     private static void given_parking_ends_at(String endText) {
 
         end = LocalDateTime.parse(endText);
+
+        ParkingSession parkingSession = parkingSessionRepository.find();
+        parkingSession.setEnd(end);
         parkingSessionRepository.save(new ParkingSession(start,end));
     }
 
     private static void given_parking_starts_at(String startText) {
         start = LocalDateTime.parse(startText);
+        parkingSessionRepository.save(new ParkingSession(start,null));
     }
 
     private static void when_calculate() {
