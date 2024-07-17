@@ -2,15 +2,14 @@ package com.example.parkinglotcharge;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.time.DayOfWeek;
 import java.time.Duration;
-import java.time.LocalDate;
 import java.util.List;
 
 public class ParkingFeeCalculator {
 
     private Duration THIRTY_MINUTES = Duration.ofMinutes(30L);
     private Duration FIFTEEN_MINUTES = Duration.ofMinutes(15L);
+    private final HolidayBook holidayBook = new HolidayBook();
 
 
     //topic : 如何製作一個 汽車計算機
@@ -50,8 +49,8 @@ public class ParkingFeeCalculator {
 
         for (DailySession dailySession : dailySessions) {
 
-            long todayFee = getRegularFee(dailySession,dailySession.getTodayDuration(),dailySession.getToday());
-            long dailyLimit = isHoliday(dailySession.getToday())
+            long todayFee = getRegularFee(dailySession);
+            long dailyLimit = holidayBook.isHoliday(dailySession.getToday())
                     ?2400
                     :150;
 
@@ -62,17 +61,13 @@ public class ParkingFeeCalculator {
 
     }
 
-    private static boolean isHoliday(LocalDate today) {
-        return List.of(DayOfWeek.SATURDAY, DayOfWeek.SUNDAY).contains(today.getDayOfWeek());
-    }
-
     private long getRegularFee(DailySession dailySession) {
         long periods = BigDecimal.valueOf(dailySession.getTodayDuration().toNanos())
                 .divide(BigDecimal.valueOf(THIRTY_MINUTES.toNanos()), RoundingMode.UP)
                 .longValue();
 
 
-        return periods * (isHoliday(dailySession.getToday())
+        return periods * (holidayBook.isHoliday(dailySession.getToday())
                         ?50
                         :30);
 
