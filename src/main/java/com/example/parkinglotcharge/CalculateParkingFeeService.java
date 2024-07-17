@@ -31,9 +31,9 @@ public class CalculateParkingFeeService {
     // solution : Repository Pattern ;
     //將行為委託給entity 、以取代{資料操作}
 
-    public long calcualte(ParkingSession parkingSession1){
+    public long calcualte(){
 
-        parkingSessionRepository.save(parkingSession1);
+        //parkingSessionRepository.save(parkingSession1);
         ParkingSession parkingSession = parkingSessionRepository.find();
 
 
