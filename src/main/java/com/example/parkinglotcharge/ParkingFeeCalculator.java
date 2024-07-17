@@ -7,7 +7,6 @@ public class ParkingFeeCalculator {
 
 
     private Duration FIFTEEN_MINUTES = Duration.ofMinutes(15L);
-    private final PriceBook priceBook;
     private PriceBookRepository priceBookRepository;
 
 
@@ -15,7 +14,7 @@ public class ParkingFeeCalculator {
     public ParkingFeeCalculator(PriceBookRepository priceBookRepository) {
         //priceBook = new PriceBook();
         this.priceBookRepository = priceBookRepository;
-        priceBook = priceBookRepository.getPriceBook();
+
     }
     //topic : 如何製作一個 汽車計算機
     //停車場
@@ -32,6 +31,8 @@ public class ParkingFeeCalculator {
     // solution : Repository Pattern ;
 
     public long calcualte(ParkingSession parkingSession){
+
+        PriceBook priceBook = priceBookRepository.getPriceBook();
 
         Duration duration = parkingSession.getTotalDuration();
 
